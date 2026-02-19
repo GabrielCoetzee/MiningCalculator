@@ -4,3 +4,5 @@
 /MiningCalculator/MiningCalculator.Services/bin/Debug
 /MiningCalculator/MiningCalculator.Services/obj
 /MiningCalculator/MiningCalculator.Services/bin/Release
+/MiningCalculator/MiningCalculator.BusinessLogic/obj
+/MiningCalculator/MiningCalculator.BusinessLogic/bin/Debug/net10.0
