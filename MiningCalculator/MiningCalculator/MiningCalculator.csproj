@@ -28,7 +28,7 @@
 		<MauiXamlInflator>SourceGen</MauiXamlInflator>
 
 		<!-- Display name -->
-		<ApplicationTitle>MiningCalculator</ApplicationTitle>
+		<ApplicationTitle>Mining Calculator</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.andrecoetzee.miningcalculator</ApplicationId>
