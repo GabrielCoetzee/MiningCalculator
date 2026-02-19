@@ -6,17 +6,17 @@
        Title="Mining Calculator"
        FlyoutBehavior="Flyout">
 
-    <FlyoutItem Title="Calculator" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Material Mass" Icon="mining.png">
         <ShellContent Title="Calculator"
                       ContentTemplate="{DataTemplate local:MainPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Gold" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Gold" Icon="gold.png">
         <ShellContent Title="Gold"
                       ContentTemplate="{DataTemplate local:GoldPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="About" Icon="dotnet_bot.png">
+    <FlyoutItem Title="About" Icon="about.png">
         <ShellContent Title="About"
                       ContentTemplate="{DataTemplate local:AboutPage}" />
     </FlyoutItem>
