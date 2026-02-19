@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using MiningCalculator.Configuration;
+using MiningCalculator.Services.Abstract;
 using System.Globalization;
 using System.Reflection;
 
@@ -7,15 +8,18 @@ namespace MiningCalculator;
 
 public partial class MainPage : ContentPage
 {
-    public IEnumerable<Substance> Substances { get; set; }
+    public IEnumerable<Substance> _substances { get; set; }
 
-    public MainPage(IOptions<SubstancesSettings> substancesSettings)
+    public IMaterialMassCalculationService _calculationService { get; set; }
+
+    public MainPage(IOptions<SubstancesSettings> substancesSettings, IMaterialMassCalculationService calculationService)
     {
         InitializeComponent();
 
-        Substances = substancesSettings.Value.Substances;
+        _substances = substancesSettings.Value.Substances;
+        _calculationService = calculationService;
 
-        foreach (var item in Substances)
+        foreach (var item in _substances)
             pickerRelativeDensity.Items.Add(item.Name);
 
         pickerRelativeDensity.SelectedIndex = 0;
@@ -45,7 +49,7 @@ public partial class MainPage : ContentPage
                 return false;
             }
 
-            density = Substances.Single(x => x.Name.Equals(pickerRelativeDensity.SelectedItem)).Density;
+            density = _substances.Single(x => x.Name.Equals(pickerRelativeDensity.SelectedItem)).Density;
         }
 
         return true;
@@ -99,10 +103,7 @@ public partial class MainPage : ContentPage
         if (!TryGetRelativeDensity(out double density))
             return;
 
-        var answer = length * width * height * density * 1000;
-        answer = Math.Round(answer, 3);
-
-        //var answer = CalculationService.CalculateRectangle(length, width, height, density);
+        var answer = _calculationService.CalculateRectangle(length, width, height, density);
 
         lblRectangleAnswer.Text = $"{answer:0.000} KG";
     }
@@ -134,11 +135,7 @@ public partial class MainPage : ContentPage
         if (!TryGetRelativeDensity(out double density))
             return;
 
-        var radius = diameter / 2;
-
-        var answer = Math.PI * Math.Pow(radius, 2) * cylHeight * density * 1000;
-
-        answer = Math.Round(answer, 3);
+        var answer = _calculationService.CalculateCyclinder(diameter, cylHeight, density);
 
         lblCylinderAnswer.Text = $"{answer:0.000} KG";
     }

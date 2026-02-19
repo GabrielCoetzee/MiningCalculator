@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MiningCalculator.Configuration;
+using MiningCalculator.Services.Abstract;
+using MiningCalculator.Services.Concrete;
 using System.Reflection;
 
 namespace MiningCalculator;
@@ -42,6 +44,7 @@ public static class MauiProgram
 
     private static void AddDependencies(MauiAppBuilder builder)
     {
-        //builder.Services.AddTransient<ICalculationService, CalculationService>();
+        builder.Services.AddTransient<IMaterialMassCalculationService, MaterialMassCalculationService>();
+        builder.Services.AddTransient<IGoldCalculationService, GoldCalculationService>();
     }
 }

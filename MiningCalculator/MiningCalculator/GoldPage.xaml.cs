@@ -1,14 +1,20 @@
+using MiningCalculator.Services.Abstract;
+
 namespace MiningCalculator;
 
 public partial class GoldPage : ContentPage
 {
-    private double _answerGPerTon;
-    private double _answerTons;
+    private double _gPerTon;
+    private double _tons;
     private double _stopingWidth;
 
-    public GoldPage()
+    public IGoldCalculationService _goldCalculationService { get; set; }
+
+    public GoldPage(IGoldCalculationService goldCalculationService)
     {
         InitializeComponent();
+
+        _goldCalculationService = goldCalculationService;
     }
 
     private void ChkStopingWidthCm_CheckedChanged(object? sender, CheckedChangedEventArgs e)
@@ -18,7 +24,8 @@ public partial class GoldPage : ContentPage
 
     private void ChkCalcSquareMeters_CheckedChanged(object? sender, CheckedChangedEventArgs e)
     {
-        bool calc = chkCalcSquareMeters.IsChecked;
+        var calc = chkCalcSquareMeters.IsChecked;
+
         entryFaceLength.IsEnabled = calc;
         entryFaceAdvance.IsEnabled = calc;
         entrySquareMetres.IsEnabled = !calc;
@@ -49,14 +56,9 @@ public partial class GoldPage : ContentPage
         }
 
         _stopingWidth = sw;
+        _gPerTon = _goldCalculationService.CalculateGPerTon(cmgt, _stopingWidth, chkStopingWidthCm.IsChecked); ;
 
-        if (chkStopingWidthCm.IsChecked)
-            _stopingWidth /= 1000;
-
-        double swForCalc = _stopingWidth * 100;
-        _answerGPerTon = Math.Round(cmgt / swForCalc, 3);
-
-        lblAnswerGPerTon.Text = $"{_answerGPerTon:0.000} G/Ton";
+        lblAnswerGPerTon.Text = $"{_gPerTon:0.000} G/Ton";
     }
 
     private async void BtnCalculateTons_Clicked(object? sender, EventArgs e)
@@ -72,23 +74,29 @@ public partial class GoldPage : ContentPage
         if (chkCalcSquareMeters.IsChecked)
         {
             var missing = new List<string>();
-            if (string.IsNullOrWhiteSpace(entryFaceLength.Text)) missing.Add("length");
-            if (string.IsNullOrWhiteSpace(entryFaceAdvance.Text)) missing.Add("width");
+
+            if (string.IsNullOrWhiteSpace(entryFaceLength.Text)) 
+                missing.Add("length");
+
+            if (string.IsNullOrWhiteSpace(entryFaceAdvance.Text)) 
+                missing.Add("width");
 
             if (missing.Count > 0)
             {
                 await DisplayAlertAsync("Missing Values", $"Please enter the face {string.Join(" and ", missing)} or uncheck Calculate Square Meters.", "OK");
+
                 return;
             }
 
-            if (!double.TryParse(entryFaceLength.Text, out double len) ||
-                !double.TryParse(entryFaceAdvance.Text, out double wid))
+            if (!double.TryParse(entryFaceLength.Text, out double len) || !double.TryParse(entryFaceAdvance.Text, out double wid))
             {
                 await DisplayAlertAsync("Characters found", "Please use numeric values only.", "OK");
+
                 return;
             }
 
-            squaredMetres = Math.Round(len * wid, 3);
+            squaredMetres = _goldCalculationService.CalculateSquareMeters(len, wid);
+
             entrySquareMetres.Text = squaredMetres.ToString("0.000");
         }
         else
@@ -106,9 +114,9 @@ public partial class GoldPage : ContentPage
             }
         }
 
-        _answerTons = Math.Round(squaredMetres * (_stopingWidth / 100) * 2.78, 3);
+        _tons = Math.Round(squaredMetres * (_stopingWidth / 100) * 2.78, 3);
 
-        lblAnswerTons.Text = $"{_answerTons:0.000} tons";
+        lblAnswerTons.Text = $"{_tons:0.000} tons";
     }
 
     private async void BtnCalculateGold_Clicked(object? sender, EventArgs e)
@@ -119,9 +127,9 @@ public partial class GoldPage : ContentPage
             return;
         }
 
-        var answerGold = Math.Round(_answerTons * _answerGPerTon / 1000, 3);
+        var answer = _goldCalculationService.CalculateGold(_tons, _gPerTon);
 
-        lblAnswerGold.Text = $"{answerGold:0.000} KG";
+        lblAnswerGold.Text = $"{answer:0.000} KG";
     }
 
     private void BtnClear_Clicked(object? sender, EventArgs e)
@@ -134,8 +142,8 @@ public partial class GoldPage : ContentPage
         entrySquareMetres.Text = string.Empty;
         lblAnswerTons.Text = string.Empty;
         lblAnswerGold.Text = string.Empty;
-        _answerGPerTon = 0;
-        _answerTons = 0;
+        _gPerTon = 0;
+        _tons = 0;
         _stopingWidth = 0;
     }
 }

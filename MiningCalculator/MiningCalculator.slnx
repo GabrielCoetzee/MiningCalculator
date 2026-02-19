@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="MiningCalculator.Services/MiningCalculator.Services.csproj" Id="0bfa334b-3310-4dfa-a586-24b3f68cd690" />
   <Project Path="MiningCalculator/MiningCalculator.csproj" />
 </Solution>

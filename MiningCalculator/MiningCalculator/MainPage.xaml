@@ -17,7 +17,7 @@
                     SelectedIndex="0" />
 
             <HorizontalStackLayout Spacing="0">
-                <CheckBox x:Name="chkManualDensity" CheckedChanged="ChkManualDensity_CheckedChanged"  VerticalOptions="Center" Margin="0,0,-80,0" />
+                <CheckBox x:Name="chkManualDensity" CheckedChanged="ChkManualDensity_CheckedChanged"  VerticalOptions="Center" Margin="0,0,-85,0" />
                 <Label Text="Manual Relative Density"
                        VerticalOptions="Center" />
             </HorizontalStackLayout>
