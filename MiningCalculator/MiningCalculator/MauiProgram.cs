@@ -2,6 +2,7 @@
 using MiningCalculator.Configuration;
 using MiningCalculator.Services.Abstract;
 using MiningCalculator.Services.Concrete;
+using MiningCalculator.ViewModels;
 using System.Reflection;
 
 namespace MiningCalculator;
@@ -46,5 +47,13 @@ public static class MauiProgram
     {
         builder.Services.AddTransient<IMaterialMassCalculationService, MaterialMassCalculationService>();
         builder.Services.AddTransient<IGoldCalculationService, GoldCalculationService>();
+
+        builder.Services.AddTransient<MainPageViewModel>();
+        builder.Services.AddTransient<GoldPageViewModel>();
+        builder.Services.AddTransient<AboutPageViewModel>();
+
+        builder.Services.AddTransient<MainPage>();
+        builder.Services.AddTransient<GoldPage>();
+        builder.Services.AddTransient<AboutPage>();
     }
 }

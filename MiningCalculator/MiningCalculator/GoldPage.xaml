@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MiningCalculator.GoldPage"
              xmlns:behaviors="clr-namespace:MiningCalculator.Behaviors"
+             xmlns:vm="clr-namespace:MiningCalculator.ViewModels"
+             x:DataType="vm:GoldPageViewModel"
              Title="Gold">
 
     <ScrollView>
@@ -14,8 +16,7 @@
                    HorizontalOptions="Center" />
 
             <HorizontalStackLayout Spacing="10">
-                <CheckBox x:Name="chkStopingWidthCm"
-                          CheckedChanged="ChkStopingWidthCm_CheckedChanged" />
+                <CheckBox IsChecked="{Binding IsStopingWidthCm}" />
                 <Label Text="Stoping width in centimeters"
                        VerticalOptions="Center" />
             </HorizontalStackLayout>
@@ -25,7 +26,7 @@
 
                 <Label Text="CMGT :" Grid.Row="0" Grid.Column="0"
                        VerticalOptions="Center" />
-                <Entry x:Name="entryCMGT" Grid.Row="0" Grid.Column="1" Keyboard="Numeric">
+                <Entry Text="{Binding CmgtText}" Grid.Row="0" Grid.Column="1" Keyboard="Numeric">
                     <Entry.Behaviors>
                         <behaviors:NumericValidationBehavior />
                     </Entry.Behaviors>
@@ -33,25 +34,25 @@
 
                 <Label Text="Stoping Width (SW) :" Grid.Row="1" Grid.Column="0"
                        VerticalOptions="Center" />
-                <Entry x:Name="entryStopingWidth" Grid.Row="1" Grid.Column="1" Keyboard="Numeric">
+                <Entry Text="{Binding StopingWidthText}" Grid.Row="1" Grid.Column="1" Keyboard="Numeric">
                     <Entry.Behaviors>
                         <behaviors:NumericValidationBehavior />
                     </Entry.Behaviors>
                 </Entry>
-                <Label x:Name="lblStopingWidthUnit" Text="meter(s)"
+                <Label Text="{Binding StopingWidthUnit}"
                        Grid.Row="1" Grid.Column="2"
                        FontAttributes="Bold" VerticalOptions="Center" />
 
                 <Label Text="Answer :" Grid.Row="2" Grid.Column="0"
                        VerticalOptions="Center" />
-                <Label x:Name="lblAnswerGPerTon" Grid.Row="2" Grid.Column="1"
+                <Label Text="{Binding AnswerGPerTon}" Grid.Row="2" Grid.Column="1"
                        FontAttributes="Bold"
                        TextColor="{AppThemeBinding Light={StaticResource ResultText}, Dark={StaticResource ResultTextDark}}"
                        FontSize="16"
                        VerticalOptions="Center" />
             </Grid>
 
-            <Button Text="Calculate G/Ton" Clicked="BtnCalculateGPerTon_Clicked"
+            <Button Text="Calculate G/Ton" Command="{Binding CalculateGPerTonCommand}"
                     HorizontalOptions="Center" />
 
             <!-- Tons Section -->
@@ -60,8 +61,7 @@
                    HorizontalOptions="Center" Margin="0,10,0,0" />
 
             <HorizontalStackLayout Spacing="10">
-                <CheckBox x:Name="chkCalcSquareMeters"
-                          CheckedChanged="ChkCalcSquareMeters_CheckedChanged" />
+                <CheckBox IsChecked="{Binding CalcSquareMeters}" />
                 <Label Text="Calculate Square Meters"
                        VerticalOptions="Center" />
             </HorizontalStackLayout>
@@ -71,34 +71,35 @@
 
                 <Label Text="Face Length :" Grid.Row="0" Grid.Column="0"
                        FontAttributes="Bold" VerticalOptions="Center" />
-                <Entry x:Name="entryFaceLength" Grid.Row="0" Grid.Column="1"
-                       IsEnabled="False" />
+                <Entry Text="{Binding FaceLengthText}" Grid.Row="0" Grid.Column="1"
+                       IsEnabled="{Binding IsFaceLengthEnabled}" />
                 <Label Text="meter(s)" Grid.Row="0" Grid.Column="2"
                        FontAttributes="Bold" VerticalOptions="Center" />
 
                 <Label Text="Face Advance :" Grid.Row="1" Grid.Column="0"
                        FontAttributes="Bold" VerticalOptions="Center" />
-                <Entry x:Name="entryFaceAdvance" Grid.Row="1" Grid.Column="1"
-                       IsEnabled="False" />
+                <Entry Text="{Binding FaceAdvanceText}" Grid.Row="1" Grid.Column="1"
+                       IsEnabled="{Binding IsFaceAdvanceEnabled}" />
                 <Label Text="meter(s)" Grid.Row="1" Grid.Column="2"
                        FontAttributes="Bold" VerticalOptions="Center" />
 
                 <Label Text="Square Metres :" Grid.Row="2" Grid.Column="0"
                        VerticalOptions="Center" />
-                <Entry x:Name="entrySquareMetres" Grid.Row="2" Grid.Column="1" />
+                <Entry Text="{Binding SquareMetresText}" Grid.Row="2" Grid.Column="1"
+                       IsEnabled="{Binding IsSquareMetresEnabled}" />
                 <Label Text="m²" Grid.Row="2" Grid.Column="2"
                        VerticalOptions="Center" />
 
                 <Label Text="Answer :" Grid.Row="3" Grid.Column="0"
                        VerticalOptions="Center" />
-                <Label x:Name="lblAnswerTons" Grid.Row="3" Grid.Column="1"
+                <Label Text="{Binding AnswerTons}" Grid.Row="3" Grid.Column="1"
                        FontAttributes="Bold"
                        TextColor="{AppThemeBinding Light={StaticResource ResultText}, Dark={StaticResource ResultTextDark}}"
                        FontSize="16"
                        VerticalOptions="Center" />
             </Grid>
 
-            <Button Text="Calculate Tons" Clicked="BtnCalculateTons_Clicked"
+            <Button Text="Calculate Tons" Command="{Binding CalculateTonsCommand}"
                     HorizontalOptions="Center" />
 
             <Label Text="Gold" FontAttributes="Bold,Italic" FontSize="20"
@@ -107,14 +108,14 @@
 
             <HorizontalStackLayout Spacing="8">
                 <Label Text="Answer :" VerticalOptions="Center" />
-                <Label x:Name="lblAnswerGold" FontAttributes="Bold"
+                <Label Text="{Binding AnswerGold}" FontAttributes="Bold"
                        TextColor="{AppThemeBinding Light={StaticResource ResultText}, Dark={StaticResource ResultTextDark}}"
                        FontSize="16" VerticalOptions="Center" />
             </HorizontalStackLayout>
 
             <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                <Button Text="Calculate Gold" Clicked="BtnCalculateGold_Clicked" />
-                <Button Text="Clear" Clicked="BtnClear_Clicked"
+                <Button Text="Calculate Gold" Command="{Binding CalculateGoldCommand}" />
+                <Button Text="Clear" Command="{Binding ClearCommand}"
                         BackgroundColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray600}}" />
             </HorizontalStackLayout>
 

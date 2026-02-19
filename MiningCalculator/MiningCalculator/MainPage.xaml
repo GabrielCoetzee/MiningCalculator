@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MiningCalculator.MainPage"
              xmlns:behaviors="clr-namespace:MiningCalculator.Behaviors"
+             xmlns:vm="clr-namespace:MiningCalculator.ViewModels"
+             x:DataType="vm:MainPageViewModel"
              Title="Mining Calculator">
 
     <ScrollView>
@@ -12,20 +14,21 @@
             <Label Text="Substance and Relative Density"
                    FontAttributes="Bold,Italic" FontSize="14" />
 
-            <Picker x:Name="pickerRelativeDensity"
-                    Title="Select substance"
-                    SelectedIndex="0" />
-            
+            <Picker Title="Select substance"
+                    ItemsSource="{Binding SubstanceNames}"
+                    SelectedIndex="{Binding SelectedSubstanceIndex}"
+                    IsEnabled="{Binding IsPickerEnabled}" />
+
             <HorizontalStackLayout Spacing="0">
-                <CheckBox x:Name="chkManualDensity" CheckedChanged="ChkManualDensity_CheckedChanged"  VerticalOptions="Center" />
+                <CheckBox IsChecked="{Binding IsManualDensity}" VerticalOptions="Center" />
                 <Label Text="Manual Relative Density"
                        VerticalOptions="Center" />
             </HorizontalStackLayout>
 
-            <Entry x:Name="entryManualDensity"
+            <Entry Text="{Binding ManualDensityText}"
                    Placeholder="Enter relative density"
                    Keyboard="Numeric"
-                   IsEnabled="False">
+                   IsEnabled="{Binding IsManualDensityEntryEnabled}">
                 <Entry.Behaviors>
                     <behaviors:NumericValidationBehavior />
                 </Entry.Behaviors>
@@ -36,19 +39,15 @@
                    Margin="0,10,0,0" />
 
             <HorizontalStackLayout Spacing="20">
-                <RadioButton x:Name="radioRectangle"
-                             Content="Rectangle / Cube"
-                             IsChecked="True"
-                             CheckedChanged="RadioShape_CheckedChanged" />
-                <RadioButton x:Name="radioCylinder"
-                             Content="Cylinder"
-                             CheckedChanged="RadioShape_CheckedChanged" />
+                <RadioButton Content="Rectangle / Cube"
+                             IsChecked="{Binding IsRectangleSelected}" />
+                <RadioButton Content="Cylinder"
+                             IsChecked="{Binding IsCylinderSelected}" />
             </HorizontalStackLayout>
 
             <!-- Rectangle Section -->
-            <Border x:Name="frameRectangle"
-                   BackgroundColor="{AppThemeBinding Light={StaticResource CardBackground}, Dark={StaticResource CardBackgroundDark}}"
-                   Padding="15" IsVisible="True"
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource CardBackground}, Dark={StaticResource CardBackgroundDark}}"
+                   Padding="15" IsVisible="{Binding IsRectangleVisible}"
                    StrokeShape="RoundRectangle 12"
                    Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}">
                 <VerticalStackLayout Spacing="10">
@@ -61,7 +60,7 @@
 
                         <Label Text="Length :" Grid.Row="0" Grid.Column="0"
                                VerticalOptions="Center" />
-                        <Entry x:Name="entryLength" Grid.Row="0" Grid.Column="1" Keyboard="Numeric">
+                        <Entry Text="{Binding LengthText}" Grid.Row="0" Grid.Column="1" Keyboard="Numeric">
                             <Entry.Behaviors>
                                 <behaviors:NumericValidationBehavior />
                             </Entry.Behaviors>
@@ -71,7 +70,7 @@
 
                         <Label Text="Width :" Grid.Row="1" Grid.Column="0"
                                VerticalOptions="Center" />
-                        <Entry x:Name="entryWidth" Grid.Row="1" Grid.Column="1" Keyboard="Numeric">
+                        <Entry Text="{Binding WidthText}" Grid.Row="1" Grid.Column="1" Keyboard="Numeric">
                             <Entry.Behaviors>
                                 <behaviors:NumericValidationBehavior />
                             </Entry.Behaviors>
@@ -81,7 +80,7 @@
 
                         <Label Text="Height :" Grid.Row="2" Grid.Column="0"
                                VerticalOptions="Center" />
-                        <Entry x:Name="entryHeight" Grid.Row="2" Grid.Column="1" Keyboard="Numeric">
+                        <Entry Text="{Binding HeightText}" Grid.Row="2" Grid.Column="1" Keyboard="Numeric">
                             <Entry.Behaviors>
                                 <behaviors:NumericValidationBehavior />
                             </Entry.Behaviors>
@@ -91,20 +90,19 @@
 
                         <Label Text="Answer :" Grid.Row="3" Grid.Column="0"
                                VerticalOptions="Center" />
-                        <Label x:Name="lblRectangleAnswer" Grid.Row="3" Grid.Column="1"
+                        <Label Text="{Binding RectangleAnswer}" Grid.Row="3" Grid.Column="1"
                                FontAttributes="Bold"
                                TextColor="{AppThemeBinding Light={StaticResource ResultText}, Dark={StaticResource ResultTextDark}}"
                                VerticalOptions="Center" FontSize="16" />
                     </Grid>
 
-                    <Button Text="Calculate" Clicked="BtnCalculateRectangle_Clicked"
+                    <Button Text="Calculate" Command="{Binding CalculateRectangleCommand}"
                             HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </Border>
 
-            <Border x:Name="frameCylinder"
-                   BackgroundColor="{AppThemeBinding Light={StaticResource CardBackground}, Dark={StaticResource CardBackgroundDark}}"
-                   Padding="15" IsVisible="False"
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource CardBackground}, Dark={StaticResource CardBackgroundDark}}"
+                   Padding="15" IsVisible="{Binding IsCylinderVisible}"
                    StrokeShape="RoundRectangle 12"
                    Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}">
                 <VerticalStackLayout Spacing="10">
@@ -117,7 +115,7 @@
 
                         <Label Text="Diameter :" Grid.Row="0" Grid.Column="0"
                                VerticalOptions="Center" />
-                        <Entry x:Name="entryDiameter" Grid.Row="0" Grid.Column="1">
+                        <Entry Text="{Binding DiameterText}" Grid.Row="0" Grid.Column="1">
                             <Entry.Behaviors>
                                 <behaviors:NumericValidationBehavior />
                             </Entry.Behaviors>
@@ -127,7 +125,7 @@
 
                         <Label Text="Height :" Grid.Row="1" Grid.Column="0"
                                VerticalOptions="Center" />
-                        <Entry x:Name="entryCylinderHeight" Grid.Row="1" Grid.Column="1">
+                        <Entry Text="{Binding CylinderHeightText}" Grid.Row="1" Grid.Column="1">
                             <Entry.Behaviors>
                                 <behaviors:NumericValidationBehavior />
                             </Entry.Behaviors>
@@ -137,18 +135,18 @@
 
                         <Label Text="Answer :" Grid.Row="2" Grid.Column="0"
                                VerticalOptions="Center" />
-                        <Label x:Name="lblCylinderAnswer" Grid.Row="2" Grid.Column="1"
+                        <Label Text="{Binding CylinderAnswer}" Grid.Row="2" Grid.Column="1"
                                FontAttributes="Bold"
                                TextColor="{AppThemeBinding Light={StaticResource ResultText}, Dark={StaticResource ResultTextDark}}"
                                VerticalOptions="Center" FontSize="16" />
                     </Grid>
 
-                    <Button Text="Calculate" Clicked="BtnCalculateCylinder_Clicked"
+                    <Button Text="Calculate" Command="{Binding CalculateCylinderCommand}"
                             HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </Border>
 
-            <Label x:Name="lblVersion" FontSize="10"
+            <Label Text="{Binding VersionText}" FontSize="10"
                    HorizontalOptions="End"
                    TextColor="{AppThemeBinding Light={StaticResource MutedText}, Dark={StaticResource MutedTextDark}}" />
 
