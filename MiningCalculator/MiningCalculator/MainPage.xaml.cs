@@ -1,44 +1,26 @@
-﻿using System.Globalization;
+﻿using Microsoft.Extensions.Options;
+using MiningCalculator.Configuration;
+using System.Globalization;
 using System.Reflection;
 
 namespace MiningCalculator;
 
 public partial class MainPage : ContentPage
 {
-    private readonly Dictionary<string, double> _densityLookup = new()
-    {
-        { "0.730 - Ammonium Nitrate", 0.730 },
-        { "0.890 - Fuel Oil (Medium Weight)", 0.890 },
-        { "0.998 - Water at 4 C", 0.998 },
-        { "1.000 - Water at 20 C", 1.000 },
-        { "1.310 - Sludge", 1.310 },
-        { "1.506 - Cement : Portland", 1.506 },
-        { "1.520 - Gravel : Loose, Dry", 1.520 },
-        { "1.600 - Crushed Stone/Rock", 1.600 },
-        { "1.682 - Gravel : Dry", 1.682 },
-        { "1.730 - Mud : Fluid", 1.730 },
-        { "1.906 - Mud : Packed", 1.906 },
-        { "1.920 - Gravel : With sand, natural", 1.920 },
-        { "1.922 - Brick : Common Red", 1.922 },
-        { "2.002 - Gravel : Wet", 2.002 },
-        { "2.180 - Rock Salt", 2.180 },
-        { "2.400 - Concrete : Gravel", 2.400 },
-        { "2.780 - Rock/Stone : South Africa", 2.780 },
-        { "7.840 - Carbon Steel", 7.840 }
-    };
+    public IEnumerable<Substance> Substances { get; set; }
 
-    public MainPage()
+    public MainPage(IOptions<SubstancesSettings> substancesSettings)
     {
         InitializeComponent();
 
-        foreach (var item in _densityLookup)
-            pickerRelativeDensity.Items.Add(item.Key);
+        Substances = substancesSettings.Value.Substances;
+
+        foreach (var item in Substances)
+            pickerRelativeDensity.Items.Add(item.Name);
 
         pickerRelativeDensity.SelectedIndex = 0;
 
-        var version = Assembly.GetExecutingAssembly().GetName().Version;
-
-        lblVersion.Text = $"Version {version}";
+        lblVersion.Text = $"Version {Assembly.GetExecutingAssembly().GetName().Version}";
     }
 
     private bool TryGetRelativeDensity(out double density)
@@ -63,7 +45,7 @@ public partial class MainPage : ContentPage
                 return false;
             }
 
-            density = _densityLookup.ElementAt(pickerRelativeDensity.SelectedIndex).Value;
+            density = Substances.Single(x => x.Name.Equals(pickerRelativeDensity.SelectedItem)).Density;
         }
 
         return true;
