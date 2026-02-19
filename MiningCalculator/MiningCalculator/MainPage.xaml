@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MiningCalculator.MainPage"
+             xmlns:behaviors="clr-namespace:MiningCalculator.Behaviors"
+             Title="Mining Calculator">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+
+            <!-- Relative Density Section -->
+            <Label Text="Substance and Relative Density"
+                   FontAttributes="Bold,Italic" FontSize="14" />
+
+            <Picker x:Name="pickerRelativeDensity"
+                    Title="Select substance"
+                    SelectedIndex="0" />
+
+            <HorizontalStackLayout Spacing="0">
+                <CheckBox x:Name="chkManualDensity" CheckedChanged="ChkManualDensity_CheckedChanged"  VerticalOptions="Center" Margin="0,0,-80,0" />
+                <Label Text="Manual Relative Density"
+                       VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Entry x:Name="entryManualDensity"
+                   Placeholder="Enter relative density"
+                   Keyboard="Numeric"
+                   IsEnabled="False">
+                <Entry.Behaviors>
+                    <behaviors:NumericValidationBehavior />
+                </Entry.Behaviors>
+            </Entry>
+
+            <!-- Shape Selector -->
+            <Label Text="Shape" FontAttributes="Bold" FontSize="16"
+                   Margin="0,10,0,0" />
+
+            <HorizontalStackLayout Spacing="20">
+                <RadioButton x:Name="radioRectangle"
+                             Content="Rectangle / Cube"
+                             IsChecked="True"
+                             CheckedChanged="RadioShape_CheckedChanged" />
+                <RadioButton x:Name="radioCylinder"
+                             Content="Cylinder"
+                             CheckedChanged="RadioShape_CheckedChanged" />
+            </HorizontalStackLayout>
+
+            <!-- Rectangle Section -->
+            <Border x:Name="frameRectangle" BackgroundColor="Black"
+                   Padding="15" IsVisible="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Rectangle / Cube Shape"
+                           FontAttributes="Italic" FontSize="14"
+                           TextColor="{AppThemeBinding Light=RoyalBlue, Dark=CornflowerBlue}" />
+
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto,Auto"
+                          ColumnSpacing="8" RowSpacing="8">
+
+                        <Label Text="Length :" Grid.Row="0" Grid.Column="0"
+                               VerticalOptions="Center" />
+                        <Entry x:Name="entryLength" Grid.Row="0" Grid.Column="1" Keyboard="Numeric">
+                            <Entry.Behaviors>
+                                <behaviors:NumericValidationBehavior />
+                            </Entry.Behaviors>
+                        </Entry>
+                        <Label Text="meter(s)" Grid.Row="0" Grid.Column="2"
+                               VerticalOptions="Center" />
+
+                        <Label Text="Width :" Grid.Row="1" Grid.Column="0"
+                               VerticalOptions="Center" />
+                        <Entry x:Name="entryWidth" Grid.Row="1" Grid.Column="1" Keyboard="Numeric">
+                            <Entry.Behaviors>
+                                <behaviors:NumericValidationBehavior />
+                            </Entry.Behaviors>
+                        </Entry>
+                        <Label Text="meter(s)" Grid.Row="1" Grid.Column="2"
+                               VerticalOptions="Center" />
+
+                        <Label Text="Height :" Grid.Row="2" Grid.Column="0"
+                               VerticalOptions="Center" />
+                        <Entry x:Name="entryHeight" Grid.Row="2" Grid.Column="1" Keyboard="Numeric">
+                            <Entry.Behaviors>
+                                <behaviors:NumericValidationBehavior />
+                            </Entry.Behaviors>
+                        </Entry>
+                        <Label Text="meter(s)" Grid.Row="2" Grid.Column="2"
+                               VerticalOptions="Center" />
+
+                        <Label Text="Answer :" Grid.Row="3" Grid.Column="0"
+                               VerticalOptions="Center" />
+                        <Label x:Name="lblRectangleAnswer" Grid.Row="3" Grid.Column="1"
+                               FontAttributes="Bold" TextColor="Maroon"
+                               VerticalOptions="Center" FontSize="16" />
+                    </Grid>
+
+                    <Button Text="Calculate" Clicked="BtnCalculateRectangle_Clicked"
+                            HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border x:Name="frameCylinder" BackgroundColor="Black"
+                   Padding="15" IsVisible="False">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Cylinder Shape"
+                           FontAttributes="Italic" FontSize="14"
+                           TextColor="{AppThemeBinding Light=RoyalBlue, Dark=CornflowerBlue}" />
+
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto"
+                          ColumnSpacing="8" RowSpacing="8">
+
+                        <Label Text="Diameter :" Grid.Row="0" Grid.Column="0"
+                               VerticalOptions="Center" />
+                        <Entry x:Name="entryDiameter" Grid.Row="0" Grid.Column="1">
+                            <Entry.Behaviors>
+                                <behaviors:NumericValidationBehavior />
+                            </Entry.Behaviors>
+                        </Entry>
+                        <Label Text="meter(s)" Grid.Row="0" Grid.Column="2"
+                               VerticalOptions="Center" />
+
+                        <Label Text="Height :" Grid.Row="1" Grid.Column="0"
+                               VerticalOptions="Center" />
+                        <Entry x:Name="entryCylinderHeight" Grid.Row="1" Grid.Column="1">
+                            <Entry.Behaviors>
+                                <behaviors:NumericValidationBehavior />
+                            </Entry.Behaviors>
+                        </Entry>
+                        <Label Text="meter(s)" Grid.Row="1" Grid.Column="2"
+                               VerticalOptions="Center" />
+
+                        <Label Text="Answer :" Grid.Row="2" Grid.Column="0"
+                               VerticalOptions="Center" />
+                        <Label x:Name="lblCylinderAnswer" Grid.Row="2" Grid.Column="1"
+                               FontAttributes="Bold" TextColor="Maroon"
+                               VerticalOptions="Center" FontSize="16" />
+                    </Grid>
+
+                    <Button Text="Calculate" Clicked="BtnCalculateCylinder_Clicked"
+                            HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label x:Name="lblVersion" FontSize="10"
+                   HorizontalOptions="End" TextColor="Gray" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
