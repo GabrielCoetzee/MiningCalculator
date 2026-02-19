@@ -10,7 +10,8 @@
                HorizontalOptions="Center" />
         <Label x:Name="lblVersion" FontSize="16" HorizontalOptions="Center" />
         <Label x:Name="lblDescription" FontSize="14" HorizontalOptions="Center" />
-        <Label x:Name="lblCopyright" FontSize="12" TextColor="Gray"
+        <Label x:Name="lblCopyright" FontSize="12"
+               TextColor="{AppThemeBinding Light={StaticResource MutedText}, Dark={StaticResource MutedTextDark}}"
                HorizontalOptions="Center" />
     </VerticalStackLayout>
 </ContentPage>

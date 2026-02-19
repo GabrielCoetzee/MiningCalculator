@@ -46,12 +46,15 @@
             </HorizontalStackLayout>
 
             <!-- Rectangle Section -->
-            <Border x:Name="frameRectangle" BackgroundColor="Black"
-                   Padding="15" IsVisible="True">
+            <Border x:Name="frameRectangle"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource CardBackground}, Dark={StaticResource CardBackgroundDark}}"
+                   Padding="15" IsVisible="True"
+                   StrokeShape="RoundRectangle 12"
+                   Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Rectangle / Cube Shape"
                            FontAttributes="Italic" FontSize="14"
-                           TextColor="{AppThemeBinding Light=RoyalBlue, Dark=CornflowerBlue}" />
+                           TextColor="{AppThemeBinding Light={StaticResource SectionText}, Dark={StaticResource SectionTextDark}}" />
 
                     <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto,Auto"
                           ColumnSpacing="8" RowSpacing="8">
@@ -89,7 +92,8 @@
                         <Label Text="Answer :" Grid.Row="3" Grid.Column="0"
                                VerticalOptions="Center" />
                         <Label x:Name="lblRectangleAnswer" Grid.Row="3" Grid.Column="1"
-                               FontAttributes="Bold" TextColor="Maroon"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource ResultText}, Dark={StaticResource ResultTextDark}}"
                                VerticalOptions="Center" FontSize="16" />
                     </Grid>
 
@@ -98,12 +102,15 @@
                 </VerticalStackLayout>
             </Border>
 
-            <Border x:Name="frameCylinder" BackgroundColor="Black"
-                   Padding="15" IsVisible="False">
+            <Border x:Name="frameCylinder"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource CardBackground}, Dark={StaticResource CardBackgroundDark}}"
+                   Padding="15" IsVisible="False"
+                   StrokeShape="RoundRectangle 12"
+                   Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Cylinder Shape"
                            FontAttributes="Italic" FontSize="14"
-                           TextColor="{AppThemeBinding Light=RoyalBlue, Dark=CornflowerBlue}" />
+                           TextColor="{AppThemeBinding Light={StaticResource SectionText}, Dark={StaticResource SectionTextDark}}" />
 
                     <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto"
                           ColumnSpacing="8" RowSpacing="8">
@@ -131,7 +138,8 @@
                         <Label Text="Answer :" Grid.Row="2" Grid.Column="0"
                                VerticalOptions="Center" />
                         <Label x:Name="lblCylinderAnswer" Grid.Row="2" Grid.Column="1"
-                               FontAttributes="Bold" TextColor="Maroon"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource ResultText}, Dark={StaticResource ResultTextDark}}"
                                VerticalOptions="Center" FontSize="16" />
                     </Grid>
 
@@ -141,7 +149,8 @@
             </Border>
 
             <Label x:Name="lblVersion" FontSize="10"
-                   HorizontalOptions="End" TextColor="Gray" />
+                   HorizontalOptions="End"
+                   TextColor="{AppThemeBinding Light={StaticResource MutedText}, Dark={StaticResource MutedTextDark}}" />
 
         </VerticalStackLayout>
     </ScrollView>

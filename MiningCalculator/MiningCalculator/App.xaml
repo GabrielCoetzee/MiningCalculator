@@ -4,6 +4,11 @@
              x:Class="MiningCalculator.App">
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
             <Style TargetType="Entry">
                 <Setter Property="Keyboard" Value="Numeric" />
                 <Setter Property="MinimumWidthRequest" Value="150" />

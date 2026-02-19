@@ -10,7 +10,8 @@
 
             <!-- G/Ton Section -->
             <Label Text="G/Ton" FontAttributes="Bold,Italic" FontSize="20"
-                   TextColor="Gold" HorizontalOptions="Center" />
+                   TextColor="{AppThemeBinding Light={StaticResource GoldAccent}, Dark={StaticResource GoldAccentDark}}"
+                   HorizontalOptions="Center" />
 
             <HorizontalStackLayout Spacing="10">
                 <CheckBox x:Name="chkStopingWidthCm"
@@ -44,7 +45,9 @@
                 <Label Text="Answer :" Grid.Row="2" Grid.Column="0"
                        VerticalOptions="Center" />
                 <Label x:Name="lblAnswerGPerTon" Grid.Row="2" Grid.Column="1"
-                       FontAttributes="Bold" TextColor="Maroon" FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource ResultText}, Dark={StaticResource ResultTextDark}}"
+                       FontSize="16"
                        VerticalOptions="Center" />
             </Grid>
 
@@ -53,7 +56,8 @@
 
             <!-- Tons Section -->
             <Label Text="Tons" FontAttributes="Bold,Italic" FontSize="20"
-                   TextColor="Gold" HorizontalOptions="Center" Margin="0,10,0,0" />
+                   TextColor="{AppThemeBinding Light={StaticResource GoldAccent}, Dark={StaticResource GoldAccentDark}}"
+                   HorizontalOptions="Center" Margin="0,10,0,0" />
 
             <HorizontalStackLayout Spacing="10">
                 <CheckBox x:Name="chkCalcSquareMeters"
@@ -88,7 +92,9 @@
                 <Label Text="Answer :" Grid.Row="3" Grid.Column="0"
                        VerticalOptions="Center" />
                 <Label x:Name="lblAnswerTons" Grid.Row="3" Grid.Column="1"
-                       FontAttributes="Bold" TextColor="Maroon" FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource ResultText}, Dark={StaticResource ResultTextDark}}"
+                       FontSize="16"
                        VerticalOptions="Center" />
             </Grid>
 
@@ -96,18 +102,20 @@
                     HorizontalOptions="Center" />
 
             <Label Text="Gold" FontAttributes="Bold,Italic" FontSize="20"
-                   TextColor="Gold" HorizontalOptions="Center" Margin="0,10,0,0" />
+                   TextColor="{AppThemeBinding Light={StaticResource GoldAccent}, Dark={StaticResource GoldAccentDark}}"
+                   HorizontalOptions="Center" Margin="0,10,0,0" />
 
             <HorizontalStackLayout Spacing="8">
                 <Label Text="Answer :" VerticalOptions="Center" />
                 <Label x:Name="lblAnswerGold" FontAttributes="Bold"
-                       TextColor="Maroon" FontSize="16" VerticalOptions="Center" />
+                       TextColor="{AppThemeBinding Light={StaticResource ResultText}, Dark={StaticResource ResultTextDark}}"
+                       FontSize="16" VerticalOptions="Center" />
             </HorizontalStackLayout>
 
             <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
                 <Button Text="Calculate Gold" Clicked="BtnCalculateGold_Clicked" />
                 <Button Text="Clear" Clicked="BtnClear_Clicked"
-                        BackgroundColor="Gray" TextColor="White" />
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray600}}" />
             </HorizontalStackLayout>
 
         </VerticalStackLayout>
