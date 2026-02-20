@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Flurl.Http;
+using Microsoft.Extensions.Configuration;
 using MiningCalculator.Configuration;
 using MiningCalculator.Services.Abstract;
 using MiningCalculator.Services.Concrete;
 using MiningCalculator.ViewModels;
 using System.Reflection;
+using System.Text.Json;
 
 namespace MiningCalculator;
 
@@ -13,12 +15,12 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
 
-        var assembly = Assembly.GetExecutingAssembly();
+        //var assembly = Assembly.GetExecutingAssembly();
 
-        using var stream = assembly.GetManifestResourceStream("MiningCalculator.appsettings.json");
+        //using var stream = assembly.GetManifestResourceStream("MiningCalculator.appsettings.json");
 
         var config = new ConfigurationBuilder()
-            .AddJsonStream(stream!)
+            //.AddJsonStream(stream!)
             .Build();
 
         builder.Configuration.AddConfiguration(config);
@@ -40,7 +42,18 @@ public static class MauiProgram
 
     private static void RegisterSettings(MauiAppBuilder builder)
     {
-        builder.Services.Configure<SubstancesSettings>(builder.Configuration.GetSection(nameof(SubstancesSettings)));
+        var appSettingsUrl = "https://raw.githubusercontent.com/GabrielCoetzee/MiningCalculator/refs/heads/main/MiningCalculator/MiningCalculator/appsettings.json";
+
+        var json = appSettingsUrl.GetStringAsync().Result;
+
+        var doc = JsonDocument.Parse(json);
+
+        var substancesSettings = doc.RootElement.GetProperty("SubstancesSettings").Deserialize<SubstancesSettings>();
+
+        builder.Services.Configure<SubstancesSettings>(options =>
+        {
+            options.Substances = substancesSettings.Substances;
+        });
     }
 
     private static void AddDependencies(MauiAppBuilder builder)
