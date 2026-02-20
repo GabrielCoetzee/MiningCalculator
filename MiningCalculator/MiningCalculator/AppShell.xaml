@@ -6,7 +6,7 @@
        Title="Mining Calculator"
        FlyoutBehavior="Flyout">
 
-    <FlyoutItem Title="Material Mass" Icon="mining.png">
+    <FlyoutItem Title="Material" Icon="mining.png">
         <ShellContent Title="Calculator"
                       ContentTemplate="{DataTemplate local:MainPage}" />
     </FlyoutItem>

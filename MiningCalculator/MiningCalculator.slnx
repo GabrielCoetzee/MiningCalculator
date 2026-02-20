@@ -1,5 +1,4 @@
 <Solution>
-  <Project Path="MiningCalculator.Services/MiningCalculator.Services.csproj" />
   <Project Path="MiningCalculator/MiningCalculator.csproj">
     <Deploy />
   </Project>
